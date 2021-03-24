@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Measuring Current GPU temperature with Raspberry Pi</title>
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked+.slider {
+    background-color: #2196F3;
+  }
+
+  input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(500px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+</style>
+</head>
+
+<body style="margin: 0;">
+  <div class="blah" style="height: 100vh; position: absolute; top:0; left: 0; right: 0; text-align: center;">
+    <h1>Welcome to my Raspberry Pi</h1>
+    <p>Current GPU temperature is {}</p>
+    <div style=" width: fit-content; margin: 3rem auto;">
+      <div class="wheel" id="colorWheelDemo"></div>
+      </div>
+  <div>
+    <label class="switch">
+      <input type="checkbox" checked>
+      <span class="slider round"></span>
+    </label>
+  </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro"></script>
+    <script>
+      var colorWheel = new iro.ColorPicker("#colorWheelDemo", {
+
+        layout: [{
+          component: iro.ui.Wheel,
+          options: {
+            wheelLightness: true,
+            wheelAngle: 0,
+            wheelDirection: "anticlockwise",
+          }
+        }]
+
+      });
+      var myColor = colorWheel.color.hexString;
+      colorWheel.on('color:change', function (color) {
+        document.querySelector('.blah').style.background = color.hexString
+
+      })
+    </script>
+</body>
+
+</html>
