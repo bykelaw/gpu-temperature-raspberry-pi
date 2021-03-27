@@ -5,82 +5,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Measuring Current GPU temperature with Raspberry Pi</title>
+</head>
 <style>
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+  .slidecontainer {
+  width: 95%; 
+  margin: 2rem auto;
   }
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
+ 
   .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 100%; 
+  height: 25px; 
+  background: #d3d3d3; 
+  outline: none; 
+  opacity: 0.7; 
+  -webkit-transition: .2s;
+  transition: opacity .2s;
   }
 
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+
+  .slider:hover {
+  opacity: 1;
   }
 
-  input:checked+.slider {
-    background-color: #2196F3;
+  
+  .slider::-webkit-slider-thumb {
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 25px; 
+  height: 25px; 
+  background: #4CAF50;
+  cursor: pointer; 
   }
 
-  input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
+  .slider::-moz-range-thumb {
+  width: 25px; 
+  height: 25px; 
+  background: #4CAF50;
+  cursor: pointer;
   }
-
-  input:checked+.slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(500px);
-  }
-
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
+  .wheel{
+    display: flex;
+    justify-content: center;
   }
 </style>
-</head>
-
 <body style="margin: 0;">
-  <div class="blah" style="height: 100vh; position: absolute; top:0; left: 0; right: 0; text-align: center;">
+  <div class="blah" style="height: 100vh; width: 100%; text-align: center; padding: 0;margin: auto;" >
     <h1>Welcome to my Raspberry Pi</h1>
     <p>Current GPU temperature is {}</p>
-    <div style=" width: fit-content; margin: 3rem auto;">
+    
       <div class="wheel" id="colorWheelDemo"></div>
-      </div>
-  <div>
-    <label class="switch">
-      <input type="checkbox" checked>
-      <span class="slider round"></span>
-    </label>
-  </div>
+    
+    <div class="slidecontainer">
+    <input type="range" min="0" max="255" value="20" class="slider" id="myRange1" >
+    </div>
+    <p>
+      Value
+      <span id="demo1"></span>
+    </p>
+    <div class="slidecontainer">
+    <input type="range" min="0" max="255" value="20" class="slider" id="myRange2" >
+    </div>
+    <p>
+      Value
+      <span id="demo2"></span>
+    </p>
   </div>
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro"></script>
     <script>
@@ -101,6 +92,22 @@
         document.querySelector('.blah').style.background = color.hexString
 
       })
+
+      var slider1 = document.getElementById("myRange1");
+      var output1 = document.getElementById("demo1");
+      output1.innerHTML = slider1.value; 
+
+      slider1.oninput = function() {
+      output1.innerHTML = this.value;
+      }
+
+      var slider2 = document.getElementById("myRange2");
+      var output2 = document.getElementById("demo2");
+      output2.innerHTML = slider2.value; 
+
+      slider2.oninput = function() {
+      output2.innerHTML = this.value;
+      }
     </script>
 </body>
 
